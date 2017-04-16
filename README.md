@@ -1,6 +1,7 @@
-# aismarthome
+# 1.aismarthome
 heroku testing
 #copycat workflow is speak-to-gh->heroku->gh-speaks (sanyil)
-# aismarthome v1 heroku
-# copy copycat nodejs thingie, modify with kyle
-# aismarthome v2 ifttt (kyle)
+# 2.aismarthome v1 heroku
+#copy copycat nodejs thingie, modify with kyle
+
+# 3.aismarthome v2 ifttt (kyle)
