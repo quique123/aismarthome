@@ -44,7 +44,8 @@ function Switch(switchValues){
   this.name = switchValues.name || "switch"
   this.toggle = function(){
     if(this.state === "on"){
-      this.setState("off")
+      this.setState("off");
+      console.log("hola caracola");
     } 
     else{
       this.setState("on");
