@@ -1,0 +1,7 @@
+{
+  "name": "Google Home Santiapps AI Butler",
+  "description": "An app to connect Google Home to Santiapps AIButler (nodejs)",
+  "repository": "https://github.com/heroku/GH-AIB",
+  "logo": "https://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "google home", "static"]
+}
