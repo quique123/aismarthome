@@ -38,3 +38,6 @@ You can serve your own frontend out of the public folder, and it will be accessi
 ### Connect to Google Home device
 1. Create your webhook on console.api.ai from Google, create your intent and in fulfillment fill in your URL used in Hurl.it
 2. Talk to Google and control your lights like a pro!
+
+#### Not working yet ####
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
