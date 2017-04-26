@@ -1,14 +1,14 @@
-# Edit line 6 to match your chosen GPIO pin-off
+# Edit line 6 to match your chosen GPIO pin-on
 import logging
 #import RPi.GPIO as GPIO
 
-logging.warning('gpio pin toggle OFF!')  # will print a message to the console
+logging.warning('gpio pin toggle!')  # will print a message to the console
 
 #GPIO.setwarnings(False)
 #GPIO.setmode(GPIO.BCM)
-#GPIO.setup(23, GPIO.IN)
-#GPIO.cleanup()
+#GPIO.setup(23, GPIO.OUT)
 
+## TEMP CALL togglerelay.py file's code snippet
 #!/usr/bin/env python
 
 import serial
@@ -25,7 +25,7 @@ ser = serial.Serial(
 print "Serial is open: " + str(ser.isOpen())
 
 print "Now Writing"
-ser.write("o")
+ser.write("e")
 #ser.write("AT+CONNL")
 print "Did write, now read"
 x = ser.readline()
