@@ -1,3 +1,4 @@
+'use strict';
 require('dotenv').config();
 
 const PythonShell = require('python-shell');
@@ -7,7 +8,16 @@ const bodyParser= require('body-parser');
 const path = require('path')
 const app = express();
 
+process.env.DEBUG = 'actions-on-google:*';
+let Assistant = require('actions-on-google').ApiAiAssistant;
+//REMOVE let express = require('express');
+//REMOVE let bodyParser = require('body-parser');
+//REMOVE let app = express();
+//REMOVE app.set('port', (process.env.PORT || 8080));
+app.use(bodyParser.json({type: 'application/json'}));
 
+const GENERATE_ANSWER_ACTION = 'generate_answer';
+const CHECK_GUESS_ACTION = 'check_guess';
 
 // Switch states held in memory
 const switches = [];
@@ -22,8 +32,7 @@ readableStream.on('data', function(chunk) {
 
 readableStream.on('end', function() {
   var parsed = JSON.parse(data);
-
-  for (i=0;i<parsed.switches.length;i++){
+  for (var i=0;i<parsed.switches.length;i++){
     switches.push(new Switch(parsed.switches[i]))
   }
 });
@@ -32,7 +41,7 @@ readableStream.on('end', function() {
 
 
 // Switch Model
-// Expects an object:{
+// Expects an object:{ which is either passed inside of switchValues for existing or created with defaults using ||
   // id:"sw" + number,
   // state: "on" or "off",
   // name: any name you want to display. Defaults to "switch"
@@ -109,21 +118,56 @@ app.get('/api/switches/:id', function(req, res){
   res.json(found);
 })
 
-app.post('/api/switches/:id', function(req, res){
+// app.post('/', function (request, response) { //will cause issues
 
-// For now, uses a simple password query in the url string. 
-// Example: POST to localhost:8000/API/switches/sw1?password=test
+app.post('/api/switches/:id', function(req, res){
+   console.log('headers: ' + JSON.stringify(req.headers));
+   console.log('body: ' + JSON.stringify(req.body));
+   const assistant = new Assistant({request: req, response: res});
+   
+   function generateAnswer(assistant) {
+      console.log('genera answer');
+      assistant.ask('I\'m thinking of a number from 0 and 100. What\'s your first guess?');
+   }
+   
+   function executeHomeCommand(assistant) {
+ 	console.log('revisear guess');
+ 	let soc = assistant.getArgument('state-of-component')
+	console.log(guess);
+ 	if (soc === 65) {
+ 	   console.log('SUCCESS soc=ON');
+ 	} else {
+ 	    console.log('FAILUER soc=OFF');
+        //assistant.tell('FAILURE soc=OFF');
+ 	}
+    }
+//   //MAP ACTIONS to functions
+ 	  let actionMap = new Map();
+ 	  actionMap.set(GENERATE_ANSWER_ACTION, generateAnswer);
+ 	  actionMap.set(EXECUTE_HOME_COMMAND, executeHomeCommand);
+ 
+ 	  assistant.handleRequest(actionMap);
+
+// Simple password query in the url string. Ex: POST to localhost:8000/API/switches/sw1?password=test
   if (req.query.password === process.env.PASS){
     var foundSwitch = getSwitch(req.params.id);
-    
-    // Optional On / Off command. If not included, defaults to a toggle.
 
-    if(!(req.query.command === "on" || req.query.command === "off")){
-      foundSwitch.toggle();
-    }
-    else {
-      foundSwitch.setState(req.query.command)
-    }
+// THIS CODE WILL REPLACE THE foundSwitch.toggle() BELOW
+	if (soc === 99) {
+		foundSwitch.setState("on");
+        console.log('SWITCHING ON');
+	} else {
+		foundSwitch.setState("off");
+        console.log('SWITCHING OFF');
+	}
+
+// THIS CODE WILL REPLACE THE foundSwitch.toggle() BELOW	  
+//     if(!(req.query.command === "on" || req.query.command === "off")){
+//       foundSwitch.toggle();
+// 	    //THIS IS THE IF TO BE MODIFIED TO if req.query.command === "on" then console.log("ON WAS PASSED IN"); 
+//     } else {
+//       foundSwitch.setState(req.query.command)
+//     }
 
     saveState();
     console.log("postSwitch "+JSON.stringify(foundSwitch));
@@ -139,4 +183,3 @@ app.post('/api/switches/:id', function(req, res){
 app.listen(process.env.PORT, function(){
  console.log('Listening on port ' + process.env.PORT);
 })
-
