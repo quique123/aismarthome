@@ -17,7 +17,7 @@ let Assistant = require('actions-on-google').ApiAiAssistant;
 app.use(bodyParser.json({type: 'application/json'}));
 
 const GENERATE_ANSWER_ACTION = 'generate_answer';
-const CHECK_GUESS_ACTION = 'check_guess';
+const EXECUTE_HOME_COMMAND = 'check_guess';
 
 // Switch states held in memory
 const switches = [];
