@@ -124,6 +124,7 @@ app.post('/api/switches/:id', function(req, res){
    console.log('headers: ' + JSON.stringify(req.headers));
    console.log('body: ' + JSON.stringify(req.body));
    const assistant = new Assistant({request: req, response: res});
+   let soc = assistant.getArgument('state-of-component')
    
    function generateAnswer(assistant) {
       console.log('genera answer');
@@ -132,9 +133,9 @@ app.post('/api/switches/:id', function(req, res){
    
    function executeHomeCommand(assistant) {
  	console.log('revisear guess');
- 	let soc = assistant.getArgument('state-of-component')
+//  	let soc = assistant.getArgument('state-of-component')
 	console.log(soc);
- 	if (soc === 65) {
+ 	if (soc === "on") {
  	   console.log('SUCCESS soc=ON');
  	} else {
  	    console.log('FAILUER soc=OFF');
@@ -153,7 +154,7 @@ app.post('/api/switches/:id', function(req, res){
     var foundSwitch = getSwitch(req.params.id);
 
 // THIS CODE WILL REPLACE THE foundSwitch.toggle() BELOW
-	if (soc === 99) {
+	if (soc === "on") {
 		foundSwitch.setState("on");
         console.log('SWITCHING ON');
 	} else {
