@@ -17,7 +17,7 @@ let Assistant = require('actions-on-google').ApiAiAssistant;
 app.use(bodyParser.json({type: 'application/json'}));
 
 const GENERATE_ANSWER_ACTION = 'generate_answer';
-const EXECUTE_HOME_COMMAND = 'check_guess';
+const EXECUTE_HOME_COMMAND = 'execute_home_command';
 
 // Switch states held in memory
 const switches = [];
@@ -133,7 +133,7 @@ app.post('/api/switches/:id', function(req, res){
    function executeHomeCommand(assistant) {
  	console.log('revisear guess');
  	let soc = assistant.getArgument('state-of-component')
-	console.log(guess);
+	console.log(soc);
  	if (soc === 65) {
  	   console.log('SUCCESS soc=ON');
  	} else {
