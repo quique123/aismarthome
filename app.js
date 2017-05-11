@@ -132,53 +132,47 @@ app.post('/api/switches/:id', function(req, res){
    }
    
    function executeHomeCommand(assistant) {
- 	console.log('revisear guess');
-//  	let soc = assistant.getArgument('state-of-component')
+      console.log('revisear guess');
 	console.log(soc);
- 	if (soc === "on") {
- 	   console.log('SUCCESS soc=ON');
- 	} else {
- 	    console.log('FAILUER soc=OFF');
-        //assistant.tell('FAILURE soc=OFF');
- 	}
-    }
-//   //MAP ACTIONS to functions
- 	  let actionMap = new Map();
- 	  actionMap.set(GENERATE_ANSWER_ACTION, generateAnswer);
- 	  actionMap.set(EXECUTE_HOME_COMMAND, executeHomeCommand);
- 
- 	  assistant.handleRequest(actionMap);
-
-// Simple password query in the url string. Ex: POST to localhost:8000/API/switches/sw1?password=test
-  if (req.query.password === process.env.PASS){
-    var foundSwitch = getSwitch(req.params.id);
-
-// THIS CODE WILL REPLACE THE foundSwitch.toggle() BELOW
+      // Simple password query in the url string. Ex: POST to localhost:8000/API/switches/sw1?password=test
+      if (req.query.password === process.env.PASS){
+      	var foundSwitch = getSwitch(req.params.id);
+	// THIS CODE WILL REPLACE THE foundSwitch.toggle() BELOW
 	if (soc === "on") {
 		foundSwitch.setState("on");
-        console.log('SWITCHING ON');
+        	console.log('SWITCHING ON');
 	} else {
 		foundSwitch.setState("off");
-        console.log('SWITCHING OFF');
+        	console.log('SWITCHING OFF');
+		//assistant.tell('FAILURE soc=OFF');
 	}
-
-// THIS CODE WILL REPLACE THE foundSwitch.toggle() BELOW	  
+    	saveState();
+    	console.log("postSwitch "+JSON.stringify(foundSwitch));
+    	res.json(foundSwitch);
+      } else {
+    	console.log("invalid password")
+    	res.send("try again")
+      }
+// OLD TOGGLE CODE foundSwitch.toggle() BELOW	  
 //     if(!(req.query.command === "on" || req.query.command === "off")){
 //       foundSwitch.toggle();
 // 	    //THIS IS THE IF TO BE MODIFIED TO if req.query.command === "on" then console.log("ON WAS PASSED IN"); 
 //     } else {
 //       foundSwitch.setState(req.query.command)
 //     }
-
-    saveState();
-    console.log("postSwitch "+JSON.stringify(foundSwitch));
-    res.json(foundSwitch);
-  }
-  else {
-    console.log("invalid password")
-    res.send("try again")
-  }
-  
+// OLD if soc ON CODE
+//  	if (soc === "on") {
+//  	   console.log('SUCCESS soc=ON');
+//  	} else {
+//  	    console.log('FAILUER soc=OFF');
+//         //assistant.tell('FAILURE soc=OFF');
+//  	}
+    }//END OF EXECUTE_COMMAND_FUNCTION
+//   	MAP ACTIONS to functions
+ 	  let actionMap = new Map();
+ 	  actionMap.set(GENERATE_ANSWER_ACTION, generateAnswer);
+ 	  actionMap.set(EXECUTE_HOME_COMMAND, executeHomeCommand);
+ 	  assistant.handleRequest(actionMap);  
 })
 
 app.listen(process.env.PORT, function(){
