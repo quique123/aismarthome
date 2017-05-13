@@ -73,7 +73,7 @@ function Switch(switchValues){
 	break;
     default:
         console.log('Sorry, no component specified');
-	Call assistant.ask('which component, which state');
+// 	Call assistant.ask('which component, which state');
    }
        var str = state === "on" ? onString(compNumberId) : offString(compNumberId);
 //   this.setState = function(state){
