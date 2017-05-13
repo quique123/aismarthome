@@ -59,6 +59,23 @@ function Switch(switchValues){
       this.setState("on");
     }
   }
+//   this.setState = function(state,component){//ADDING NEW COMPONENTS...ADDING NEW COMPONENTS...ADDING NEW COMPONENTS
+//   var compNumberId = 0;
+//   switch(component) {
+//     case "lights":
+//         compNumberId = 1;
+//         break;
+//     case "patio-lights":
+//         compNumberId = 2;
+//         break;
+//     case "water":
+//	   compNumberId = 3;
+//	   break;
+//     default:
+//         console.log('Sorry, no component specified');
+//	   Call assistant.ask('which component, which state');
+//    }
+// var str = state === "on" ? onString(compNumberId) : offString(compNumberId);
   this.setState = function(state){
     var str = state === "on" ? onString(this.id[2]) : offString(this.id[2]);
     PythonShell.run(str, function (err) {
@@ -71,6 +88,8 @@ function Switch(switchValues){
   // Invokes setState on init to set the switch to its last recalled state.
   this.setState(this.state);
 }    
+
+
 
 // needed due to a quirk with PythonShell
 function onString(number){
@@ -129,7 +148,7 @@ app.post('/api/switches/:id', function(req, res){
 	
    function generateAnswer(assistant) {
       console.log('genera answer');
-      assistant.ask('Which component and what state?');//ADDING NEW COMPONENTS...ADDING NEW COMPONENTS
+//       assistant.ask('Which component and what state?');//ADDING NEW COMPONENTS...ADDING NEW COMPONENTS
    }
    
    function executeHomeCommand(assistant) {
@@ -138,8 +157,7 @@ app.post('/api/switches/:id', function(req, res){
       // Simple password query in the url string. Ex: POST to localhost:8000/API/switches/sw1?password=test
       if (req.query.password === process.env.PASS){
       	var foundSwitch = getSwitch(req.params.id);
-	console.log(foundSwitch);//ADDING NEW COMPONENTS...ADDING NEW COMPONENTS
-	// depending on what switch, call the right py?
+// 	console.log(foundSwitch);//ADDING NEW COMPONENTS...ADDING NEW COMPONENTS...ADDING NEW COMPONENTS
 	if (soc === "on") {
 		foundSwitch.setState("on");
         	console.log('SWITCHING ON');
