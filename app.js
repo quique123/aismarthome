@@ -142,6 +142,7 @@ app.get('/api/switches/:id', function(req, res){
 app.post('/api/switches/:id', function(req, res){
    console.log('headers: ' + JSON.stringify(req.headers));
    console.log('body: ' + JSON.stringify(req.body));
+   console.log('params: ' + JSON.stringify(req.params));
    const assistant = new Assistant({request: req, response: res});
    let soc = assistant.getArgument('state-of-component');
    let comp = assistant.getArgument('Component');//ADDING NEW COMPONENTS...ADDING NEW COMPONENTS
