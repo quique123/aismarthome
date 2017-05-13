@@ -2,7 +2,7 @@
 import logging
 #import RPi.GPIO as GPIO
 
-logging.warning('gpio pin toggle OFF!')  # will print a message to the console
+logging.warning('3gpio pin toggle OFF!')  # will print a message to the console
 
 #GPIO.setwarnings(False)
 #GPIO.setmode(GPIO.BCM)
