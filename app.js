@@ -59,25 +59,25 @@ function Switch(switchValues){
       this.setState("on");
     }
   }
-//   this.setState = function(state,component){//ADDING NEW COMPONENTS...ADDING NEW COMPONENTS...ADDING NEW COMPONENTS
-//   var compNumberId = 0;
-//   switch(component) {
-//     case "lights":
-//         compNumberId = 1;
-//         break;
-//     case "patio-lights":
-//         compNumberId = 2;
-//         break;
-//     case "water":
-//	   compNumberId = 3;
-//	   break;
-//     default:
-//         console.log('Sorry, no component specified');
-//	   Call assistant.ask('which component, which state');
-//    }
-// var str = state === "on" ? onString(compNumberId) : offString(compNumberId);
-  this.setState = function(state){
-    var str = state === "on" ? onString(this.id[2]) : offString(this.id[2]);
+  this.setState = function(state,component){//ADDING NEW COMPONENTS...ADDING NEW COMPONENTS...ADDING NEW COMPONENTS
+  var compNumberId = 0;
+  switch(component) {
+    case "lights":
+        compNumberId = 1;
+        break;
+    case "patio":
+        compNumberId = 2;
+        break;
+    case "water":
+	compNumberId = 3;
+	break;
+    default:
+        console.log('Sorry, no component specified');
+	Call assistant.ask('which component, which state');
+   }
+       var str = state === "on" ? onString(compNumberId) : offString(compNumberId);
+//   this.setState = function(state){
+//     var str = state === "on" ? onString(this.id[2]) : offString(this.id[2]);
     PythonShell.run(str, function (err) {
       if (!process.env.DEV){
         if (err) throw err;
