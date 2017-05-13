@@ -124,11 +124,12 @@ app.post('/api/switches/:id', function(req, res){
    console.log('headers: ' + JSON.stringify(req.headers));
    console.log('body: ' + JSON.stringify(req.body));
    const assistant = new Assistant({request: req, response: res});
-   let soc = assistant.getArgument('state-of-component')
-   
+   let soc = assistant.getArgument('state-of-component');
+   let comp = assistant.getArgument('Component');//ADDING NEW COMPONENTS...ADDING NEW COMPONENTS
+	
    function generateAnswer(assistant) {
       console.log('genera answer');
-      assistant.ask('I\'m thinking of a number from 0 and 100. What\'s your first guess?');
+      assistant.ask('Which component and what state?');//ADDING NEW COMPONENTS...ADDING NEW COMPONENTS
    }
    
    function executeHomeCommand(assistant) {
@@ -137,7 +138,8 @@ app.post('/api/switches/:id', function(req, res){
       // Simple password query in the url string. Ex: POST to localhost:8000/API/switches/sw1?password=test
       if (req.query.password === process.env.PASS){
       	var foundSwitch = getSwitch(req.params.id);
-	// THIS CODE WILL REPLACE THE foundSwitch.toggle() BELOW
+	console.log(foundSwitch);//ADDING NEW COMPONENTS...ADDING NEW COMPONENTS
+	// depending on what switch, call the right py?
 	if (soc === "on") {
 		foundSwitch.setState("on");
         	console.log('SWITCHING ON');
