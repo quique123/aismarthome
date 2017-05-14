@@ -145,6 +145,8 @@ app.post('/api/switches/:id', function(req, res){
    const assistant = new Assistant({request: req, response: res});
    let soc = assistant.getArgument('state-of-component');
    let comp = assistant.getArgument('Component');//ADDING NEW COMPONENTS...ADDING NEW COMPONENTS
+   console.log(soc);
+   console.log(comp);
 	
    function generateAnswer(assistant) {
       console.log('genera answer');
